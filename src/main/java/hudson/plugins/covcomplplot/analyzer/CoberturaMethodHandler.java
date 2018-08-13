@@ -21,9 +21,8 @@ import org.dom4j.Document;
 import org.dom4j.Element;
 
 /**
- * Clover result handler. This class is responsible to read the clover result
- * and make the {@link MethodInfo} list. In addition, some clover specific
- * actions.
+ * Cobertura result handler. This class pulls in method coverage/complexity data directly from Cobertura's XML,
+ * rather than trying to work out the complexity based on source code / branch coverage data.
  * 
  * @author JunHo Yoon
  */
@@ -66,8 +65,13 @@ public class CoberturaMethodHandler extends AbstractMethodInfoHandler {
 				if (name == null || "<clinit>".equals(name) || "<init>".equals(name) || name.startsWith("__CLR")) {
 					continue;
 				}
-
+				boolean calculateComplexity = true;
 				int complexity = 1;
+				String complexityValue = eachMethodElement.attributeValue("complexity");
+				if (complexityValue != null) {
+					complexity = Integer.parseInt(complexityValue);
+					calculateComplexity = false;
+				}
 				int line = 1;
 				int covered = 0;
 				int size = 0;
@@ -85,7 +89,7 @@ public class CoberturaMethodHandler extends AbstractMethodInfoHandler {
 						covered++;
 					}
 
-					if ("true".equals(eachLineElement.attributeValue("branch"))) {
+					if (calculateComplexity && "true".equals(eachLineElement.attributeValue("branch"))) {
 						complexity += getBranchCount(eachLineElement.attributeValue("condition-coverage"));
 					}
 				}
