@@ -1,6 +1,7 @@
 target
 work
 .classpath
+.metadata
 .project
 .settings
 *.iml
