@@ -1,7 +1,7 @@
 <j:jelly xmlns:j="jelly:core" xmlns:st="jelly:stapler" xmlns:d="jelly:define"
 	xmlns:l="/lib/layout" xmlns:t="/lib/hudson" xmlns:f="/lib/form"
 	xmlns:i="jelly:fmt" xmlns:local="local">
-		<script  language="javascript" src="${rootURL}/plugin/covcomplplot/covcomplplot-behavior.js"/>
+		<script language="javascript" src="${rootURL}/plugin/covcomplplot/covcomplplot-behavior.js"/>
 		<div id="covComplPlot">
 		
 			<div class="test-trend-caption">Coverage/Complexity Scatter Plot
@@ -13,7 +13,7 @@
 			<div id='covComplDescription' style="margin-left:45px"></div>
 			<img src="${rootURL}/${it.owner.url}/covcomplplot/graph/png" usemap="#covcomplmap" />
 			<div>
-				${it.target.graph.getMapString(withBuildNo)}
+				<j:out value="${it.target.graph.getMapString(withBuildNo)}" />
 			</div>
 			<div style="text-align:right">
 				*
